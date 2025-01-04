@@ -18,7 +18,7 @@ public class hangTest extends LinearOpMode {
     public DcMotor[] drivetrain = new DcMotor[4];
     DcMotor body;
     DcMotor wrist;
-    CRServo rightHanger, leftHanger;
+    CRServo rightClaw, leftClaw;
     CRServo grabbie;
 
     public double speedMode = 0.7;
@@ -42,8 +42,8 @@ public class hangTest extends LinearOpMode {
 //        wrist = hardwareMap.get(DcMotor.class, "wrist");
 
         grabbie = hardwareMap.get(CRServo.class, "grabbie");
-        rightHanger = hardwareMap.get(CRServo.class, "rightHanger");
-        leftHanger = hardwareMap.get(CRServo.class, "leftHanger");
+        rightClaw = hardwareMap.get(CRServo.class, "rightClaw");
+        leftClaw = hardwareMap.get(CRServo.class, "leftClaw");
 
         motorBL.setDirection(DcMotor.Direction.FORWARD);
         motorFL.setDirection(DcMotor.Direction.FORWARD);
@@ -53,13 +53,9 @@ public class hangTest extends LinearOpMode {
         motorFR.setPower(0);
         motorBL.setPower(0);
         motorBR.setPower(0);
-//        wrist.setPower(0);
-//
-        rightHanger.setPower(0);
-        leftHanger.setPower(0);
-//
-//        wrist.setDirection(DcMotorSimple.Direction.FORWARD);
-//        wrist.setPower(0);
+
+        rightClaw.setPower(0);
+        leftClaw.setPower(0);
 
         body.setDirection(DcMotorSimple.Direction.FORWARD);
         leftTubeDrive.setPower(0);
@@ -78,8 +74,6 @@ public class hangTest extends LinearOpMode {
         hangOne.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         body.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-//        wrist.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
 
         telemetry.addData("Status", "Initialized");
         telemetry.update();
@@ -141,76 +135,11 @@ public class hangTest extends LinearOpMode {
             motorBL.setPower(backLeftPower);
             motorFR.setPower(frontRightPower);
             motorBR.setPower(backRightPower);
-//            if (gamepad1.left_stick_y < -0.1) {
-//                motorFL.setPower(1);
-//                motorBR.setPower(1);
-//                motorFR.setPower(1);
-//                motorBL.setPower(1);
-//
-//            } else if (gamepad1.left_stick_y > 0.1) {
-//                motorFL.setPower(-1);
-//                motorBR.setPower(-1);
-//                motorFR.setPower(-1);
-//                motorBL.setPower(-1);
-//            } else if (gamepad1.left_stick_y < 0.1 && gamepad1.left_stick_y > -0.1) {
-//                motorFL.setPower(0);
-//                motorBR.setPower(0);
-//                motorFR.setPower(0);
-//                motorBL.setPower(0);
-//            }
-//            if (gamepad1.left_stick_x > 0.1) {
-//                motorFL.setPower(1);
-//                motorBR.setPower(1);
-//                motorFR.setPower(-1);
-//                motorBL.setPower(-1);
-//            } else if (gamepad1.left_stick_x < -0.1) {
-//                motorFL.setPower(-1);
-//                motorBR.setPower(-1);
-//                motorFR.setPower(1);
-//                motorBL.setPower(1);
-//            } else if (gamepad1.left_stick_x > -0.1 && gamepad1.left_stick_x < 0.1) {
-//                motorFL.setPower(0);
-//                motorBR.setPower(0);
-//                motorFR.setPower(0);
-//                motorBL.setPower(0);
-//            }
-//            if (gamepad1.right_stick_x > 0.1) {
-//                motorFL.setPower(1);
-//                motorBL.setPower(1);
-//                motorBR.setPower(-1);
-//                motorFR.setPower(-1);
-//            } else if (gamepad1.right_stick_x < -0.1) {
-//                motorFL.setPower(-1);
-//                motorBL.setPower(-1);
-//                motorBR.setPower(1);
-//                motorFR.setPower(1);
-//            } else if (gamepad1.right_stick_x > -0.1 && gamepad1.right_stick_x < 0.1) {
-//                motorFL.setPower(0);
-//                motorBR.setPower(0);
-//                motorFR.setPower(0);
-//                motorBL.setPower(0);
-//            }
-//            if (gamepad1.left_trigger > 0.1) {
-//                rightHanger.setPower(1);
-//                leftHanger.setPower(1);
-//                telemetry.addLine("This is gonna work, trust");
-//                telemetry.update();
-//            } else if (gamepad1.right_trigger > 0.1) {
-//                rightHanger.setPower(-1);
-//                leftHanger.setPower(-1);
-//                telemetry.addLine("This is gonna work, trust");
-//                telemetry.update();
-//            } else if (gamepad1.dpad_right) {
-//                leftHanger.setPower(0);
-//                rightHanger.setPower(0);
-//                telemetry.addLine("We hate Bessmellah");
-//                telemetry.update();
-//            }
 
             if (gamepad2.left_stick_y < -0.1) {
-                body.setPower(0.7);
-            } else if (gamepad2.left_stick_y > 0.1) {
                 body.setPower(-0.7);
+            } else if (gamepad2.left_stick_y > 0.1) {
+                body.setPower(0.7);
             } else if (gamepad2.left_stick_y < 0.1 && gamepad2.left_stick_y > -0.1) {
                 body.setPower(0);
             }
@@ -239,48 +168,19 @@ public class hangTest extends LinearOpMode {
             }
 
             if (gamepad2.x) {
-                leftHanger.setPower(-1);
-                rightHanger.setPower(1);
+                grabbie.setPower(-1);
+//                leftClaw.setPower(-1);
+//                rightClaw.setPower(1);
             } else if (gamepad2.y) {
-                leftHanger.setPower(1);
-                rightHanger.setPower(-1);
+                grabbie.setPower(1);
+//                leftClaw.setPower(1);
+//                rightClaw.setPower(-1);
             } else if (gamepad2.x == false && gamepad2.y == false) {
-                leftHanger.setPower(0);
-                rightHanger.setPower(0);
+                grabbie.setPower(0);
+//                leftClaw.setPower(0);
+//                rightClaw.setPower(0);
             }
 
-//            if (gamepad2.right_stick_y < -0.1) {
-//                arm.setPower(1);
-//            } else if (gamepad2.right_stick_y > 0.1) {
-//                arm.setPower(-1);
-//            } else if (gamepad2.right_stick_y < 0.1 && gamepad2.right_stick_y < -0.1) {
-//                arm.setPower(0);
-//            } else {
-//                arm.setPower(0);
-//            }
-
-//            if (gamepad1.dpad_left) {
-//                leftHanger.setPower(-1);
-//                rightHanger.setPower(1);
-//                sleep(600);
-//                while (opModeIsActive()) {
-//                    leftHanger.setPower(1);
-//                    rightHanger.setPower(-1);
-//                    sleep(300);
-//                    leftHanger.setPower(-1);
-//                    rightHanger.setPower(1);
-//                    sleep(1000);
-//                    telemetry.addLine("This is gonna work, trust");
-//                    telemetry.update();
-//                }
-
-//                if (gamepad1.left_bumper) {
-//                    speedMode = 1;
-//                } else if (gamepad1.right_bumper) {
-//                    speedMode = 0.2;
-//                } else if (gamepad1.a) {
-//                    speedMode = 0.7;
-//                }
 
             }
         }
